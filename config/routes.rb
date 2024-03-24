@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       post '/login', to: 'sessions#create'
       resources :courses # Add this line to include courses resources
+      resources :students
     end
   end
 end

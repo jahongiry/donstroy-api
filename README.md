@@ -1,4 +1,4 @@
-\*\* Users
+\*\*Users
 POST /api/v1/login
 
 ```

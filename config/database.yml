@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
   database: donstroy_api_production
-  username: donstroy_api
-  password: <%= ENV["DONSTROY_API_DATABASE_PASSWORD"] %>
+  username: postgres
+  password: <%= ENV["RAIL_UPLOAD_DATABASE_PASSWORD"] %>

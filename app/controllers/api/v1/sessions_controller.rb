@@ -2,7 +2,7 @@ module Api
   module V1
     class SessionsController < ApplicationController
       def create
-        @user = User.find_by(email: params[:email]) || User.find_by(phone_number: params[:phone_number])
+        @user = User.find_by(email: params[:email])
 
         if @user && @user.valid_password?(params[:password])
           token = generate_token(@user.id)

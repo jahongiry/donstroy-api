@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_request, unless: :signup_or_login_request?
+  skip_before_action :authenticate_request, only: [:index, :show]
 
   private
 

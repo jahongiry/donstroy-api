@@ -49,7 +49,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def user_params
-        params.require(:user).permit(:email, :phone_number, :password)
+        params.require(:user).permit(:email, :password)
       end
     end
   end

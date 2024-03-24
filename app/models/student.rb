@@ -36,7 +36,7 @@ class Student < ApplicationRecord
     course_y = (image.height / 2) + 30
 
     image.combine_options do |c|
-      c.font "Arial"
+      c.font Rails.root.join('public', 'arial.ttf')
       c.fill "black"
       c.draw "text #{name_x},#{name_y} 'Student Name: #{name}'"
       c.draw "text #{course_x},#{course_y} 'Course: #{course.name}'"

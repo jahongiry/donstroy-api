@@ -6,7 +6,6 @@ Rails.application.routes.draw do
       post '/login', to: 'sessions#create'
       resources :courses # Add this line to include courses resources
       resources :students
-      get '/certificates/:id_certificate.png', to: 'certificates#show'
     end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_24_165836) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_084509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_24_165836) do
     t.string "teacher"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "images", default: []
   end
 
   create_table "students", force: :cascade do |t|

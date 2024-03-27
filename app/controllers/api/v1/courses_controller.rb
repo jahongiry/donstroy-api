@@ -14,9 +14,17 @@ module Api
         render json: @course
       end
 
-      # POST /courses
+   # POST /courses
       def create
-        @course = Course.new(course_params)
+        if params[:course].present? && params[:course][:images].present?
+          uploaded_images = Array(params[:course][:images])
+          puts uploaded_images.length
+          images = save_uploaded_images(uploaded_images)
+          @course = Course.new(course_params.except(:images))
+          @course.images = images
+        else
+          @course = Course.new(course_params)
+        end
 
         if @course.save
           render json: @course, status: :created
@@ -24,6 +32,7 @@ module Api
           render json: @course.errors, status: :unprocessable_entity
         end
       end
+
 
       # PATCH/PUT /courses/1
       def update
@@ -49,6 +58,33 @@ module Api
       def course_params
         params.require(:course).permit(:name, :description, :teacher, images: [])
       end
+      
+    # Helper method to save uploaded images
+      def save_uploaded_images(uploaded_images)
+        images = []
+
+        uploaded_images.each do |uploaded_image|
+          # Generate a unique filename for the uploaded image
+          filename = "#{SecureRandom.hex(10)}_#{uploaded_image.original_filename}"
+
+          # Specify the directory where you want to save the uploaded images
+          upload_directory = Rails.root.join('public', 'uploads', 'courses')
+
+          # Ensure that the directory exists, otherwise create it
+          FileUtils.mkdir_p(upload_directory) unless File.directory?(upload_directory)
+
+          file_path = File.join(upload_directory, filename)
+
+          File.open(file_path, 'wb') do |file|
+            file.write(uploaded_image.read)
+          end
+
+          images << "/uploads/courses/#{filename}"
+        end
+        images
+      end
+
+
     end
   end 
 end

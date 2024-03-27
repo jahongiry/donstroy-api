@@ -6,13 +6,13 @@ module Api
 
       # GET /students
       def index
-        @students = Student.all
-        render json: @students
+        @students = Student.includes(:course).all
+        render json: @students, include: { course: { only: [:name] } }
       end
 
       # GET /students/1
       def show
-        render json: @student
+        render json: @student, include: { course: { only: [:name] } }
       end
 
       # POST /students

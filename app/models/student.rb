@@ -20,13 +20,58 @@ class Student < ApplicationRecord
     qr_code_image = MiniMagick::Image.open(qr_code_path)
     x_offset = (image.width - qr_code_image.width) / 2
     y_offset = (image.height - qr_code_image.height) / 2
-
-    x_offset += 400
-    y_offset += 500
+    extra_x_offset = 900
+    extra_y_offset = 900
 
     image = image.composite(qr_code_image) do |c|
       c.compose "Over"
+      x_offset = image.width - qr_code_image.width 
+      y_offset = image.height - qr_code_image.height
       c.geometry "+#{x_offset}+#{y_offset}"
+    end
+
+    uzbekistan_x = (image.width - 200) / 2 + 90
+    uzbekistan_y = 105 
+
+    image.combine_options do |c|
+      c.font Rails.root.join('public', 'arial.ttf')
+      c.fill "black"
+      c.pointsize 16  
+      c.draw "text #{uzbekistan_x},#{uzbekistan_y} 'O\\'ZBEKISTON RESPUBLIKASI'"
+      c.weight "Bold"
+    end
+
+    talim_x = (image.width - 200) / 2 + 55
+    talim_y = 130 
+
+    image.combine_options do |c|
+      c.font Rails.root.join('public', 'arial.ttf')
+      c.fill "black"
+      c.pointsize 16  
+      c.draw "text #{talim_x},#{talim_y} 'OLIY TA\\'LIM, FAN VA INNOVATSIYALAR'"
+      c.weight "Bold"
+    end
+
+    vazirligi_x = (image.width - 200) / 2 + 170
+    vazirligi_y = 155 
+
+    image.combine_options do |c|
+      c.font Rails.root.join('public', 'arial.ttf')
+      c.fill "black"
+      c.pointsize 16  
+      c.draw "text #{vazirligi_x},#{vazirligi_y} 'VAZIRLIGI'"
+      c.weight "Bold"
+    end
+
+    uuid_x = (image.width - 200) / 2
+    uuid_y = (image.height - 50) / 2
+
+    image.combine_options do |c|
+      c.font Rails.root.join('public', 'arial.ttf')
+      c.fill "black"
+      c.pointsize 16  
+      c.draw "text #{uuid_x},#{uuid_y} 'UUID: #{@uuid}'"
+      c.weight "Bold"
     end
 
     # Add text to the certificate
@@ -42,12 +87,11 @@ class Student < ApplicationRecord
       c.draw "text #{course_x},#{course_y} 'Course: #{course.name}'"
     end
 
-    # Write the certificate image to the output path
     image.write(output_path)
 
     self.qr_code = "/qr_codes/#{@uuid}_qr_code.png"
     self.certificate_url = "/certificates/#{@uuid}_certificate.png"
-    save  # Save the record with QR code and certificate URL
+    save  
   end
 
   def generate_qr_code(uuid, url)
@@ -57,7 +101,7 @@ class Student < ApplicationRecord
       resize_exactly_to: false,
       fill: 'white',
       color: 'black',
-      size: 250,
+      size: 120,
       border_modules: 4,
       module_px_size: 6,
       file: nil 

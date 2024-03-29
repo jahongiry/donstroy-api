@@ -163,7 +163,7 @@ class Student < ApplicationRecord
       c.fill "black"
       c.pointsize 16
       c.font Rails.root.join('public', 'arial.ttf')
-      c.draw "text #{level_x},#{level_y} #{level}"
+      c.draw "text #{level_x},#{level_y} '#{level}'"
     end
 
     line6_x = (image.width - 200) / 2 + 115

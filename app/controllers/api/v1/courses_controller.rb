@@ -14,8 +14,13 @@ module Api
         render json: @course
       end
 
-   # POST /courses
+    # POST /courses
       def create
+        # Unescape the course name if it contains escaped characters
+        if params[:course][:name].present?
+          params[:course][:name] = CGI.unescapeHTML(params[:course][:name])
+        end
+
         if params[:course].present? && params[:course][:images].present?
           uploaded_images = Array(params[:course][:images])
           puts uploaded_images.length
@@ -32,7 +37,6 @@ module Api
           render json: @course.errors, status: :unprocessable_entity
         end
       end
-
 
       # PATCH/PUT /courses/1
       def update

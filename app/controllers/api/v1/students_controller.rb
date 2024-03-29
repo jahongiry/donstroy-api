@@ -47,9 +47,9 @@ module Api
         end
 
         # Only allow a list of trusted parameters through.
-        def student_params
-          params.require(:student).permit(:name, :course_id, :certificate_date)
-        end
+      def student_params
+        params.require(:student).permit(:name, :course_id, :certificate_date, :hour, :level, :control, :passport)
+      end
     end
   end
 end

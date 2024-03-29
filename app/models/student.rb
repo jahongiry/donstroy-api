@@ -154,7 +154,7 @@ class Student < ApplicationRecord
       c.fill "black"
       c.pointsize 13
       c.font Rails.root.join('public', 'arial.ttf')
-      c.draw "text #{line4_x},#{line4_y} 'topshirganligi uchun \"#{control}\" bo\\'yicha sertifikat berildi'"
+      c.draw "text #{line4_x},#{line4_y} 'topshirganligi uchun unga \"#{control}\" sertifikati berildi'"
     end
 
     level_x = (image.width - 200) / 2 + 160
